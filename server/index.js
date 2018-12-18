@@ -2,11 +2,11 @@ var express = require('express')
 var bp = require('body-parser')
 var server = express()
 var cors = require('cors')
-var port = process.env.PORT || 9001
+var port = 9001
 
 // server.use(express.static(__dirname + ))
 
-var whiteList = "http://localhost:8080"
+var whitelist = ["http://localhost:8080"]
 var corsOptions = {
     origin: function (origin, callback) {
         var originIsWhitelisted = whitelist.indexOf(origin) !== -1;
@@ -17,7 +17,7 @@ var corsOptions = {
 server.use(cors(corsOptions))
 
 //FIRE UP DATABASE CONNECTION
-require('./server/db/mlab-config')
+require('./db/mlab-config')
 
 //REGISTER MIDDLEWEAR
 server.use(bp.json())
@@ -43,7 +43,7 @@ server.use(bp.urlencoded({
 // })
 
 
-//ALL ROUTES BELOW
+// ALL ROUTES BELOW
 let postRoutes = require('../server/routes/post-route')
 server.use('/api/posts', postRoutes)
 
@@ -54,7 +54,7 @@ let hobbyRoutes = require('../server/routes/hobby-route')
 server.use('/api/hobbies', hobbyRoutes)
 
 
-//CATCH ALL
+// CATCH ALL
 server.use('*', (error, req, res, next) => {
     res.status(404).send({
         error: error || 'no matching routes'
