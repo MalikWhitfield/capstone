@@ -15,7 +15,7 @@ router.get('/:userId', (req, res, next) => {
 
 //GET ALL POSTS FOR TIMELINE
 router.get('/', (req, res, next) => {
-    Posts.find()   //AFTER WE GET ALL POSTS, WE WANT TO GET THE POSTS OF THE PEOPLE WE FOLLOW 
+    Posts.find({})   //AFTER WE GET ALL POSTS, WE WANT TO GET THE POSTS OF THE PEOPLE WE FOLLOW 
         .then(data => {
             res.send(data)
         })
@@ -29,6 +29,8 @@ router.get('/', (req, res, next) => {
 //CREATE POSTS 
 router.post('/', (req, res, next) => {
     req.body.authorId = req.session.uid
+    req.body.authorName = req.session.userName
+    req.body.authorImage = req.session.userImage
     Posts.create(req.body)
         .then(newPost => {
             res.send(newPost)
