@@ -1,6 +1,6 @@
 let router = require('express').Router();
 let Users = require('../models/User');
-let session = require('./session')
+let session = require('../auth/sessions')
 
 
 let loginError = new Error('Bad Email or Password')

@@ -27,20 +27,20 @@ server.use(bp.urlencoded({
 
 
 //AUTH ROUTES
-// let auth = require('../server/auth/routes')
-// server.use(auth.session)
-// server.use(auth.router)
+let auth = require('../server/auth/routes')
+server.use(auth.session)
+server.use(auth.router)
 
 
-// //Gate Keeper Must login to access any route below this code
-// server.use((req, res, next) => {
-//     if (!req.session.uid) {
-//         return res.status(401).send({
-//             error: 'Please login to continue'
-//         })
-//     }
-//     next()
-// })
+//Gate Keeper Must login to access any route below this code
+server.use((req, res, next) => {
+    if (!req.session.uid) {
+        return res.status(401).send({
+            error: 'Please login to continue'
+        })
+    }
+    next()
+})
 
 
 // ALL ROUTES BELOW

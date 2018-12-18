@@ -30,11 +30,12 @@ router.get('/', (req, res, next) => {
 router.post('/', (req, res, next) => {
     req.body.authorId = req.session.uid
     Posts.create(req.body)
-    then(newPost => {
-        res.send(newPost)
-    })
+        .then(newPost => {
+            res.send(newPost)
+        })
         .catch(err => {
             console.log(err)
+            next(err)
         })
 })
 
