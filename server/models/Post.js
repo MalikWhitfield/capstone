@@ -5,15 +5,16 @@ let schemaName = 'Post'
 
 
 let schema = new Schema({
-    content: { type: String, required: true },
-    video: { type: String },
-    image: { type: String },
-    hobbyId: { type: ObjectId, ref: 'Hobby' },
-    created: { type: Number, required: true, default: Date.now() },
-    authorId: { type: ObjectId, ref: 'User', required: true },
-    authorName: { type: String, ref: 'User', required: true },
-    authorImage: { type: String, ref: 'User' }
-})
+  content: { type: String, required: true },
+  video: { type: String },
+  image: { type: String },
+  hobbyId: { type: ObjectId, ref: 'Hobby' },
+  authorId: { type: ObjectId, ref: 'User', required: true },
+  authorName: { type: String, ref: 'User', required: true },
+  authorImage: { type: String, ref: 'User' }
+},
+  { timestamps: true }
+)
 
 
 module.exports = mongoose.model(schemaName, schema)

@@ -17,11 +17,13 @@ let schema = new Schema({
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },  //every email must be unique on the database
     password: { type: String, required: true },
-    created: { type: Number, required: true, default: Date.now() },
     bio: { type: String },
     image: { type: String }, //DEFAULT ON THE FRONT END,
-    hobbies: [hobby]
-})
+    hobbies: [hobby],
+    following: [{ type: ObjectId, ref: 'User' }]
+},
+    { timestamps: true },
+)
 
 
 

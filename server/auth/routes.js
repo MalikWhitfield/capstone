@@ -49,6 +49,9 @@ router.post('/auth/login', (req, res) => {
             //ALWAYS REMOVE THE PASSWORD FROM THE USER OBJECT
             delete user._doc.password
             req.session.uid = user._id
+            req.session.userName = user.name
+            req.session.userImage = user.image
+            req.session.userBio = user.bio
             res.send(user)
         }).catch(err => {
             res.status(400).send(loginError)

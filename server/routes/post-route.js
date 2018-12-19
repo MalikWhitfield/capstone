@@ -1,5 +1,7 @@
 let router = require('express').Router()
 let Posts = require('../models/Post')
+// let session = require('../auth/sessions')
+let routes = require('../auth/routes')
 
 //GET POSTS FOR YOUR PROFILE PAGE
 router.get('/:userId', (req, res, next) => {

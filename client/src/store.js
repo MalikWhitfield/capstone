@@ -31,17 +31,37 @@ export default new Vuex.Store({
     setPosts(state, posts) {
       state.posts = posts
     },
-    logout(state) {
-      state.user = {}
-      router.push({ name: 'home', path: '/home' })
+    setUser(state, user) {
+      state.user = user
     }
   },
   actions: {
     //AUTHENTICATION
-    logout({ commit, dispatch }) {
-      auth.delete('/logout')
+    authenticate({ commit, dispatch }) {
+      auth.get('authenticate')
         .then(res => {
-          commit('logout')
+          commit('setUser', res.data)
+        })
+    },
+    login({ commit, dispatch }, creds) {
+      auth.post('login', creds)
+        .then(res => {
+          commit('setUser', res.data)
+          router.push({ name: 'home' })
+        })
+    },
+    logout({ commit, dispatch }) {
+      auth.delete('logout')
+        .then(res => {
+          router.push({ name: 'home', path: '/home' })
+          commit('setUser', {})
+        })
+    },
+    register({ commit, dispatch }, newUser) {
+      auth.post('register', newUser)
+        .then(res => {
+          commit('setUser', res.data)
+          router.push({ name: 'home', path: '/home' })
         })
     },
 
@@ -52,6 +72,18 @@ export default new Vuex.Store({
           commit('setPosts', res.data)
         })
     },
+    addPost({ commit, dispatch }, newPost) {
+      api.post('posts', newPost)
+        .then(res => {
+          commit('setPosts', newPost)
+        })
+    },
+    deletePost({ commit, dispatch }, postId) {
+      api.delete('posts/' + postId)
+        .then(res => {
+          dispatch('getPosts')
+        })
+    }
 
   }
 })

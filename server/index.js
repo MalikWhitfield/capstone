@@ -53,6 +53,9 @@ server.use('/api/comments', commentRoutes)
 let hobbyRoutes = require('../server/routes/hobby-route')
 server.use('/api/hobbies', hobbyRoutes)
 
+let userRoutes = require('../server/routes/user-route')
+server.use('/api/users', userRoutes)
+
 
 // CATCH ALL
 server.use('*', (error, req, res, next) => {
