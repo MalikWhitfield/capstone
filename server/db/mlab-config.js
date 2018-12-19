@@ -1,9 +1,9 @@
 var mongoose = require('mongoose')
-var connectionString = 'mongodb://holla1:holla1@ds016298.mlab.com:16298/holla'
+var connectionString = 'mongodb://hobbyshare1:hobbyshare1@ds131763.mlab.com:31763/hobbyshare'
 var connection = mongoose.connection
 
 
-mongoose.connect(connectionString, { useMongoClient: true })
+mongoose.connect(connectionString)
 
 connection.on('error', err => {
     console.log('ERROR FROM DATABASE: ', err)

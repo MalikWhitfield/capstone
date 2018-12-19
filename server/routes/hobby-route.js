@@ -27,6 +27,7 @@ router.get('/', (req, res, next) => {
 
 //POST HOBBIES
 router.post('/', (req, res, next) => {
+    req.body.authorId = req.session.uid
     Hobbies.create(req.body)
         .then(newHobby => {
             res.send(newHobby)
@@ -54,3 +55,5 @@ router.post('/', (req, res, next) => {
 //             });
 //         })
 // })
+
+module.exports = router

@@ -20,7 +20,6 @@ let schema = new Schema({
     created: { type: Number, required: true, default: Date.now() },
     bio: { type: String },
     image: { type: String }, //DEFAULT ON THE FRONT END,
-    level: { type: String, enum: ['Just For Fun', 'Beginner', 'Intermediate', 'Advanced'], default: 'Just For Fun', required: true },
     hobbies: [hobby]
 })
 
