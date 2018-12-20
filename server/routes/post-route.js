@@ -79,6 +79,29 @@ router.delete('/:postId', (req, res, next) => {
         })
 })
 
+//Likes ROUTE
+router.put('/likes/postId', (req, res, next) => {
+    Posts.findById(req.params.postId)
+        .then(post => {
+            if (post.likes[req.session.uid] || !req.session.uid) {
+                res.send('Sorry, cannot like post again')
+            }
+            post.likes[req.session.uid] = 1
+            post.markModified('likes')
+            post.save((err) => {
+                if (err) {
+                    console.log(err)
+                    return res.send(err)
+                }
+                return res.send(post)
+            })
+                .catch(err => {
+                    console.log(err)
+                    next()
+                })
+        })
+})
+
 
 
 

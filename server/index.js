@@ -32,7 +32,7 @@ server.use(auth.session)
 server.use(auth.router)
 
 
-//Gate Keeper Must login to access any route below this code
+// Gate Keeper Must login to access any route below this code
 // server.use((req, res, next) => {
 //     if (!req.session.uid) {
 //         return res.status(401).send({

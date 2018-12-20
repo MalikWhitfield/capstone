@@ -43,7 +43,8 @@ router.post('/auth/login', (req, res) => {
                 return res.status(400).send(loginError)
             }
             //CHECK THE PASSWORD
-            if (!user.validatePassword(req.body.password)) {
+            let valid = user.validatePassword(req.body.password)
+            if (!valid) {
                 return res.status(400).send(loginError)
             }
             //ALWAYS REMOVE THE PASSWORD FROM THE USER OBJECT
@@ -57,6 +58,7 @@ router.post('/auth/login', (req, res) => {
             res.status(400).send(loginError)
         })
 })
+
 
 //REMOVE THE ACTIVE SESSION FROM THE DATABASE
 router.delete('/auth/logout', (req, res) => {

@@ -16,31 +16,13 @@
       </div>
     </div>
     <div class="row">
+
       <!-- USER SIDEBAR COMPONENT -->
       <div class="col-4"></div>
 
       <!-- PUBLIC FEED -->
       <div class="col-6">
-        <div v-for="post in posts" :key="post._id">
-          <div class="card">
-            <img class="card-img-top" :src="post.image || post.video" height="250rem" width="100rem">
-            <div class="card-body">
-              <div class="card-subtitle">
-                <h6><strong>This will be Hobby Tags</strong></h6>
-              </div>
-              <blockquote class="blockquote mb-0">
-                <p>{{post.content}}</p>
-                <footer class="blockquote-footer">
-                  <cite title="Source Title">{{post.authorName}} <img :src="post.authorImage" height="30rem" width="30rem">
-                    ||
-                    {{post.createdAt}}</cite>
-                </footer>
-              </blockquote>
-            </div>
-            <i v-if="!user.id" class="fa fa-trash mb-2 hover" aria-hidden="true" @click="deletePost(post._id)"></i>
-          </div>
-        </div>
-        <comments></comments>
+        <post v-for="post in posts" :key="post._id" :postData="post"></post>
       </div>
     </div>
   </div>
@@ -49,7 +31,7 @@
 <script>
   // @ is an alias to /src
 
-  import Comments from '@/components/Comments.vue'
+  import Post from "@/components/Post.vue"
   export default {
     name: "home",
     data() {
@@ -59,7 +41,11 @@
           video: "",
           image: ""
         },
-        showAddPost: false
+        newComment: {
+          content: '',
+          postId: ''
+        },
+        showAddPost: false,
       };
     },
     mounted() {
@@ -81,10 +67,21 @@
       },
       deletePost(postId) {
         this.$store.dispatch('deletePost', postId)
+      },
+      likePost(postId) {
+        this.$store.dispatch('likePost', postId)
+      },
+      addComment(postId) {
+        let payload = {
+          postId: postId,
+          content: this.newComment.content
+        }
+        this.$store.dispatch('addComment', payload)
+        this.showCommentForm = false
       }
     },
     components: {
-      Comments
+      Post
     }
   }
 </script>

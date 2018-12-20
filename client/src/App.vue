@@ -1,8 +1,7 @@
 <template>
   <div id="app">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <i class="fas fa-box-open box"></i>
-      <a class="navbar-brand" href="#">myHobbi</a>
+      <a class="navbar-brand" href="#">myHobb<i class="fas fa-info-circle icon"></i></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
         aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -64,6 +63,11 @@
 
   #nav a.router-link-exact-active {
     color: #42b983;
+  }
+
+  .icon {
+    color: whitesmoke;
+    font-size: 20px;
   }
 
   .hover {

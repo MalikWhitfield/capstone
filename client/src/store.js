@@ -24,7 +24,7 @@ export default new Vuex.Store({
   state: {
     user: {},
     posts: [],
-    comments: [],
+    comments: {},
     hobbies: []
   },
   mutations: {
@@ -33,6 +33,15 @@ export default new Vuex.Store({
     },
     setUser(state, user) {
       state.user = user
+    },
+    setLikes(state, updatedPost) {
+      let index = state.posts.findIndex(post => {
+        return post._id == updatedPost._id
+      })
+      state.posts.splice(index, 1, updatedPost)
+    },
+    setComments(state, payload) {
+      Vue.set(state.comments, payload.postId, payload.comments)
     }
   },
   actions: {
@@ -83,7 +92,36 @@ export default new Vuex.Store({
         .then(res => {
           dispatch('getPosts')
         })
-    }
+    },
+    likePost({ commit, dispatch }, postId) {
+      api.put('posts/likes/' + postId)
+        .then(res => {
+          let payload = {
+            postId: postId,
+            likes: res.data,
+          }
+          commit('setLikes', payload)
+        })
+    },
 
+    //COMMENTS
+    addComment({ commit, dispatch }, payload) {
+      api.post('comments', payload)
+        .then(res => {
+          dispatch('getComments', payload.postId)
+        })
+    },
+    getComments({ commit, dispatch }, postId) {
+      api.get('comments/' + postId)
+        .then(res => {
+          if (res.data.length) {
+            let payload = {
+              postId: postId,
+              comments: res.data
+            }
+            commit('setComments', payload)
+          }
+        })
+    }
   }
 })

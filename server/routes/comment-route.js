@@ -16,6 +16,8 @@ router.get('/:postId', (req, res, next) => {
 //POST COMMENTS
 router.post('/', (req, res, next) => {
     req.body.authorId = req.session.uid
+    req.body.authorName = req.session.userName
+    req.body.authorImage = req.session.userImage
     Comments.create(req.body)
         .then(newComment => {
             res.send(newComment)
