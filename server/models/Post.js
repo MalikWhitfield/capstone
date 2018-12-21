@@ -12,7 +12,7 @@ let schema = new Schema({
   authorId: { type: ObjectId, ref: 'User', required: true },
   authorName: { type: String, ref: 'User', required: true },
   authorImage: { type: String, ref: 'User' },
-  likes: {}
+  likes: { type: Object, default: {} }
 },
   { timestamps: true }
 )

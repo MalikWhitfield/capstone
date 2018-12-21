@@ -102,6 +102,9 @@ export default new Vuex.Store({
           }
           commit('setLikes', payload)
         })
+        .catch(err => {
+          console.log('Sorry, cannot like post again')
+        })
     },
 
     //COMMENTS
