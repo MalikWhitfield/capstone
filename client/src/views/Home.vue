@@ -13,12 +13,15 @@
             <button type="submit">Add Post</button>
           </form>
         </div>
+        <button @click="getPosts">Refresh Feed</button>
       </div>
     </div>
     <div class="row">
 
       <!-- USER SIDEBAR COMPONENT -->
-      <div class="col-4"></div>
+      <div class="col-4">
+        <User />
+      </div>
 
       <!-- PUBLIC FEED -->
       <div class="col-6">
@@ -30,7 +33,7 @@
 
 <script>
   // @ is an alias to /src
-
+  import User from "@/components/User.vue"
   import Post from "@/components/Post.vue"
   export default {
     name: "home",
@@ -61,6 +64,9 @@
       },
     },
     methods: {
+      getPosts() {
+        this.$store.dispatch('getPosts')
+      },
       addPost() {
         this.$store.dispatch('addPost', this.newPost)
         this.showAddPost = false
@@ -81,7 +87,8 @@
       }
     },
     components: {
-      Post
+      Post,
+      User
     }
   }
 </script>
