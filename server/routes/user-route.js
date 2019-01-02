@@ -22,6 +22,16 @@ router.get('/', (req, res, next) => {
         })
 })
 
+router.get('/:userId', (req, res, next) => {
+    Users.findById(req.params.userId, { name: 1, bio: 1, image: 1, hobbies: 1, following: 1 })
+        .then(user => {
+            res.send(user)
+        })
+        .catch(err => {
+            console.log(err)
+            next()
+        })
+})
 
 // EDIT USER INFO   BIO/IMAGE/NAME
 router.put('/:userId', (req, res, next) => {
@@ -34,7 +44,7 @@ router.put('/:userId', (req, res, next) => {
                     return
                 }
                 res.send('Successfully Updated User')
-            });
+            })
         })
 })
 

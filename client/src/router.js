@@ -4,7 +4,9 @@ import Router from 'vue-router'
 import Home from './views/Home.vue'
 // @ts-ignore
 import Login from './views/Login.vue'
-import UserProfile from './components/UserProfile.vue'
+
+// @ts-ignore
+import UserProfile from './views/UserProfile.vue'
 
 Vue.use(Router)
 
@@ -35,6 +37,7 @@ export default new Router({
     {
       path: '/:userId',
       name: 'userprofile',
+      props: true,
       component: UserProfile
     }
   ]

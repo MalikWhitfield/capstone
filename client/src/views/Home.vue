@@ -1,7 +1,6 @@
 <template>
   <div class="container-fluid">
     <div class="row justify-content-center">
-
       <!-- ADD POST BUTTON AND FORM -->
       <div class="col-12">
         <div v-if="!user.id">
@@ -20,7 +19,7 @@
 
       <!-- USER SIDEBAR COMPONENT -->
       <div class="col-4">
-        <User />
+        <User v-if="user._id" />
       </div>
 
       <!-- PUBLIC FEED -->
@@ -57,7 +56,12 @@
     },
     computed: {
       posts() {
-        return this.$store.state.posts || [];
+        // return this.$store.state.posts || [];
+        let posts = this.$store.state.posts || [];
+        posts.forEach(p => {
+          p.totalLikes = Object.keys(p.likes).length
+        })
+        return posts
       },
       user() {
         return this.$store.state.user

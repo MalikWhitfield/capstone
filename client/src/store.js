@@ -23,6 +23,7 @@ let api = Axios.create({
 export default new Vuex.Store({
   state: {
     user: {},
+    viewedUser: {},
     posts: [],
     comments: {},
     hobbies: []
@@ -43,6 +44,12 @@ export default new Vuex.Store({
     setComments(state, payload) {
       Vue.set(state.comments, payload.postId, payload.comments)
     },
+    setViewedUser(state, user) {
+      state.viewedUser = user
+    },
+    setDefaultUser(state) {
+      state.viewedUser = state.user
+    }
   },
   actions: {
     //AUTHENTICATION
@@ -74,11 +81,27 @@ export default new Vuex.Store({
         })
     },
 
+    //USERS
+    editUser({ commit, dispatch }, payload) {
+      debugger
+      api.put('/users/' + payload.userId)
+        .then(res => {
+          commit('setUser', res.data)
+        })
+    },
+
+
     //POSTS
     getPosts({ commit, dispatch }) {
       api.get('/posts')
         .then(res => {
           commit('setPosts', res.data)
+        })
+    },
+    getUser({ commit, dispatch }, userId) {
+      api.get('/users/' + userId)
+        .then(res => {
+          commit('setViewedUser', res.data)
         })
     },
     addPost({ commit, dispatch }, newPost) {
