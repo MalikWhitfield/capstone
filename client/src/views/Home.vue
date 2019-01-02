@@ -3,16 +3,7 @@
     <div class="row justify-content-center">
       <!-- ADD POST BUTTON AND FORM -->
       <div class="col-12">
-        <div v-if="!user.id">
-          <i class="fa fa-plus" aria-hidden="true" @click="showAddPost= !showAddPost"></i>
-          <form v-if="showAddPost" @submit.prevent="addPost">
-            <input type="text" placeholder="Image Link Here" v-model="newPost.image">
-            <input type="text" placeholder="Video Link Here" v-model="newPost.video">
-            <input type="text" placeholder="Caption/Content Here" v-model="newPost.content" required: true>
-            <button type="submit">Add Post</button>
-          </form>
-        </div>
-        <button @click="getPosts">Refresh Feed</button>
+
       </div>
     </div>
     <div class="row">
@@ -47,7 +38,6 @@
           content: '',
           postId: ''
         },
-        showAddPost: false,
       };
     },
     mounted() {
@@ -70,10 +60,6 @@
     methods: {
       getPosts() {
         this.$store.dispatch('getPosts')
-      },
-      addPost() {
-        this.$store.dispatch('addPost', this.newPost)
-        this.showAddPost = false
       },
       deletePost(postId) {
         this.$store.dispatch('deletePost', postId)

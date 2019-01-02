@@ -23,6 +23,16 @@
           <li v-if="user._id" @click="setUser()" class="nav-item action">
             <router-link class="nav-link" :to="{name: 'userprofile', params: { userId: user._id}}">{{user.name}}</router-link>
           </li>
+          <li v-if="user._id" class="nav-item action" @click="">
+            <i class="fa fa-plus icon hover " aria-hidden="true" @click="showAddPost= !showAddPost"></i>
+            <form v-if="showAddPost" @submit.prevent="addPost">
+              <input type="text" placeholder="Image Link Here" v-model="newPost.image">
+              <input type="text" placeholder="Video Link Here" v-model="newPost.video">
+              <input type="text" placeholder="Caption/Content Here" v-model="newPost.content" required: true>
+              <button type="submit">Add Post</button>
+            </form>
+            <i class="fas fa-sync icon ml-3" @click="getPosts"></i>
+          </li>
         </ul>
       </div>
     </nav>
@@ -33,6 +43,12 @@
 
 <script>
   export default {
+    data() {
+      return {
+        showAddPost: false,
+      }
+
+    },
     mounted() {
       this.$store.dispatch("authenticate");
     },
@@ -47,6 +63,13 @@
       },
       setUser() {
         this.$store.commit('setDefaultUser')
+      },
+      addPost() {
+        this.$store.dispatch('addPost', this.newPost)
+        this.showAddPost = false
+      },
+      getPosts() {
+        this.$store.dispatch('getPosts')
       }
     }
   };

@@ -83,10 +83,10 @@ export default new Vuex.Store({
 
     //USERS
     editUser({ commit, dispatch }, payload) {
-      debugger
-      api.put('/users/' + payload.userId)
+      api.put('/users/' + payload._id, payload)
         .then(res => {
           commit('setUser', res.data)
+          dispatch('getUser')
         })
     },
 

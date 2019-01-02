@@ -25,9 +25,9 @@
 
       <!-- EDIT USER FORM -->
       <form v-if="showEditUser" @submit.prevent="editUser(user._id)">
-        <input type="text" v-model="editedUser.name" placeholder="Name">
-        <input type="text" v-model="editedUser.bio" placeholder="Bio">
-        <input type="text" v-model="editedUser.image" placeholder="Image Url">
+        <input type="text" v-model="user.name" placeholder="Name">
+        <input type="text" v-model="user.bio" placeholder="Bio">
+        <input type="text" v-model="user.image" placeholder="Image Url">
         <button type="submit">Save</button>
       </form>
     </div>
@@ -41,11 +41,6 @@
     data() {
       return {
         showEditUser: false,
-        editedUser: {
-          name: "",
-          bio: "",
-          image: ""
-        }
       }
     },
     computed: {
@@ -61,13 +56,7 @@
         this.$store.commit('setDefaultUser')
       },
       editUser(id) {
-        let payload = {
-          userId: this.user._id,
-          name: this.editedUser.name,
-          bio: this.editedUser.bio,
-          image: this.editedUser.image
-        }
-        this.$store.dispatch('editUser', payload)
+        this.$store.dispatch('editUser', this.user)
       }
     }
   }
