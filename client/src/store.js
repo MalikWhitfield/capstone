@@ -42,7 +42,7 @@ export default new Vuex.Store({
     },
     setComments(state, payload) {
       Vue.set(state.comments, payload.postId, payload.comments)
-    }
+    },
   },
   actions: {
     //AUTHENTICATION
@@ -124,6 +124,14 @@ export default new Vuex.Store({
             }
             commit('setComments', payload)
           }
+        })
+    },
+
+    //HOBBIES
+    addHobby({ commit, dispatch }, payload) {
+      api.post('hobbies', payload)
+        .then(res => {
+
         })
     }
   }
