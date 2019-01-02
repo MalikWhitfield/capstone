@@ -4,6 +4,7 @@
     <div class="card">
       <div class="card-header d-flex justify-content-start">
         <h4><img :src="postData.authorImage" height="30rem" width="30rem"> {{postData.authorName}}</h4>
+      <!-- Do we want this h4 to be a router-link instead? So that when someone clicks on the postData.authorImage, they are brought to the UserProfile vue? -->
       </div>
       <img class="card-img-top" :src="postData.image || postData.video" height="250rem" width="100rem">
       <div class="card-body">
