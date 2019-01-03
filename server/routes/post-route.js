@@ -17,13 +17,12 @@ router.get('/:userId', (req, res, next) => {
 
 //GET ALL POSTS FOR TIMELINE
 router.get('/', (req, res, next) => {
-    Posts.find({})   //AFTER WE GET ALL POSTS, WE WANT TO GET THE POSTS OF THE PEOPLE WE FOLLOW 
-        .then(data => {
+    Posts.find({})
+        .populate('authorId', 'name image _id')
+        //AFTER WE GET ALL POSTS, WE WANT TO GET THE POSTS OF THE PEOPLE WE FOLLOW
+        .exec((err, data) => {
+            if (err) { return next(err) }
             res.send(data)
-        })
-        .catch(err => {
-            console.log(err)
-            next()
         })
 })
 
@@ -31,10 +30,13 @@ router.get('/', (req, res, next) => {
 //CREATE POSTS 
 router.post('/', (req, res, next) => {
     req.body.authorId = req.session.uid
-    req.body.authorName = req.session.userName
-    req.body.authorImage = req.session.userImage
     Posts.create(req.body)
         .then(newPost => {
+            newPost.authorId = {
+                name: req.session.user.name,
+                image: req.session.user.image,
+                _id: req.session.user._id
+            }
             res.send(newPost)
         })
         .catch(err => {

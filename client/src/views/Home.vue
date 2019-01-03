@@ -3,7 +3,18 @@
     <div class="row justify-content-center">
       <!-- ADD POST BUTTON AND FORM -->
       <div class="col-12">
-
+        <div v-if="user._id">
+          <i class="fa fa-plus icon1 hover" aria-hidden="true" @click="showAddPost= !showAddPost"></i>
+          <form v-if="showAddPost" @submit.prevent="addPost">
+            <input type="text" placeholder="Image Link Here" v-model="newPost.image">
+            <input type="text" placeholder="Video Link Here" v-model="newPost.video">
+            <input type="text" placeholder="Caption/Content Here" v-model="newPost.content" required: true>
+            <button type="submit">Add Post</button>
+          </form>
+          <div>
+            <i class="fas fa-sync icon1 hover" @click="getPosts"></i>
+          </div>
+        </div>
       </div>
     </div>
     <div class="row">
@@ -38,17 +49,20 @@
           content: '',
           postId: ''
         },
+        showAddPost: false
       };
     },
     mounted() {
       this.$store.dispatch("getPosts");
-      // this.$store.dispatch("getUser");
     },
     computed: {
       posts() {
         // return this.$store.state.posts || [];
         let posts = this.$store.state.posts || [];
         posts.forEach(p => {
+          if (!p.likes) {
+            return p.totalLikes = 0
+          }
           p.totalLikes = Object.keys(p.likes).length
         })
         return posts
@@ -60,6 +74,10 @@
     methods: {
       getPosts() {
         this.$store.dispatch('getPosts')
+      },
+      addPost() {
+        this.$store.dispatch('addPost', this.newPost)
+        this.showAddPost = false
       },
       deletePost(postId) {
         this.$store.dispatch('deletePost', postId)
@@ -82,3 +100,9 @@
     }
   }
 </script>
+<style scoped>
+  .icon1 {
+    color: black;
+    font-size: 20px;
+  }
+</style>

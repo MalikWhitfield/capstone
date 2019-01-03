@@ -35,18 +35,55 @@ router.get('/:userId', (req, res, next) => {
 
 // EDIT USER INFO   BIO/IMAGE/NAME
 router.put('/:userId', (req, res, next) => {
+    Users.findByIdAndUpdate(req.session.uid, req.body, { new: true }, (err, updatedUser) => {
+        if (err) {
+            console.log(err)
+            next(err)
+            return
+        }
+        res.send(updatedUser)
+
+    })
+})
+
+router.put('/:userId/follow/:userIdToFollow', (req, res, next) => {
     Users.findById(req.session.uid)
         .then(user => {
-            user.update(req.body, (err) => {
-                if (err) {
-                    console.log(err)
-                    next()
-                    return
-                }
-                res.send('Successfully Updated User')
-            })
+            user.following.addToSet(req.params.userIdToFollow)
+            return user.save()
+        })
+        .then(() => {
+            res.send({ message: "Now Following User" })
+        })
+        .catch(err => next(err))
+})
+
+router.get('/:userId/following', (req, res, next) => {
+    Users.findById(req.params.userId).populate('following', 'name image _id')
+        .exec((err, user) => {
+            if (err) { return next(err) }
+            return res.send(user.following)
         })
 })
+
+
+
+
+
+// router.put('/:userId', (req, res, next) => {
+//     Users.findById(req.session.uid, { new: true })
+//         .then(user => {
+//             user.update(req.body, (err, updatedUser) => {
+//                 if (err) {
+//                     console.log(err)
+//                     next()
+//                     return
+//                 }
+//                 res.send(updatedUser)
+//             });
+//         })
+// })
+
 
 
 

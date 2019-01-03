@@ -40,7 +40,7 @@
         },
         computed: {
             posts() {
-                return this.$store.state.posts.filter(post => post.authorId == this.userId) || [];
+                return this.$store.state.posts.filter(post => post.authorId._id == this.userId) || [];
             },
             user() {
                 return this.$store.state.viewedUser

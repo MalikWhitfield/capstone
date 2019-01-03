@@ -7,6 +7,7 @@ let schemaName = 'User'
 let bcrypt = require('bcryptjs')
 const SALT = 10
 
+let Posts = require('./Post.js')
 
 let hobby = new Schema({
     name: { type: String, required: true },
@@ -46,5 +47,8 @@ schema.methods.validatePassword = function (password) {
         })
     })
 }
+
+
+
 
 module.exports = mongoose.model(schemaName, schema)

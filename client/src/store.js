@@ -26,11 +26,15 @@ export default new Vuex.Store({
     viewedUser: {},
     posts: [],
     comments: {},
-    hobbies: []
+    hobbies: [],
+    following: []
   },
   mutations: {
     setPosts(state, posts) {
       state.posts = posts
+    },
+    addPost(state, newPost) {
+      state.posts.push(newPost)
     },
     setUser(state, user) {
       state.user = user
@@ -49,6 +53,9 @@ export default new Vuex.Store({
     },
     setDefaultUser(state) {
       state.viewedUser = state.user
+    },
+    setFollowers(state, payload) {
+      state.following = payload
     }
   },
   actions: {
@@ -57,6 +64,7 @@ export default new Vuex.Store({
       auth.get('authenticate')
         .then(res => {
           commit('setUser', res.data)
+          dispatch('getFollowing', res.data._id)
         })
     },
     login({ commit, dispatch }, creds) {
@@ -69,8 +77,8 @@ export default new Vuex.Store({
     logout({ commit, dispatch }) {
       auth.delete('logout')
         .then(res => {
-          router.push({ name: 'home', path: '/home' })
           commit('setUser', {})
+          router.push({ name: 'home', path: '/home' })
         })
     },
     register({ commit, dispatch }, newUser) {
@@ -86,16 +94,8 @@ export default new Vuex.Store({
       api.put('/users/' + payload._id, payload)
         .then(res => {
           commit('setUser', res.data)
-          dispatch('getUser')
-        })
-    },
-
-
-    //POSTS
-    getPosts({ commit, dispatch }) {
-      api.get('/posts')
-        .then(res => {
-          commit('setPosts', res.data)
+          commit('setViewedUser', res.data)
+          console.log(res.data)
         })
     },
     getUser({ commit, dispatch }, userId) {
@@ -104,10 +104,19 @@ export default new Vuex.Store({
           commit('setViewedUser', res.data)
         })
     },
+
+    //POSTS
+    getPosts({ commit, dispatch }) {
+      api.get('/posts')
+        .then(res => {
+          commit('setPosts', res.data)
+        })
+    },
+
     addPost({ commit, dispatch }, newPost) {
       api.post('posts', newPost)
         .then(res => {
-          commit('setPosts', newPost)
+          commit('addPost', res.data)
         })
     },
     deletePost({ commit, dispatch }, postId) {
@@ -147,6 +156,20 @@ export default new Vuex.Store({
             }
             commit('setComments', payload)
           }
+        })
+    },
+
+    //FOLLOWING
+    follow({ commit, dispatch }, payload) {
+      api.put('users/' + payload.userId + '/follow/' + payload.followingId)
+        .then(res => {
+          dispatch('getFollowing', payload.userId)
+        })
+    },
+    getFollowing({ commit }, userId) {
+      api.get('/users/' + userId + '/following')
+        .then(res => {
+          commit('setFollowers', res.data)
         })
     },
 

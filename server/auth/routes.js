@@ -22,6 +22,7 @@ router.post('/auth/register', (req, res) => {
             //REMOVE THE PASSWORD BEFORE RETURNING
             delete user._doc.password
             //SET THE SESSION UID (SHORT FOR USERID)
+            req.session.user = user
             req.session.uid = user._id
             req.session.userName = user.name
             req.session.userImage = user.image

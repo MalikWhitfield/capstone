@@ -3,10 +3,10 @@
     <!-- CARD FOR EACH POST -->
     <div class="card">
       <div class="card-header d-flex justify-content-start">
-        <router-link :to="{name: 'userprofile', params: { userId: postData.authorId}}">
-          <img :src="postData.authorImage" height="30rem" width="30rem" @click="getUser(postData.authorId)">
+        <router-link :to="{name: 'userprofile', params: { userId: postData.authorId._id}}">
+          <img :src="postData.authorId.image" height="30rem" width="30rem" @click="getUser(postData.authorId._id)">
         </router-link>
-        <h4>{{postData.authorName}}</h4>
+        <h4>{{postData.authorId.name}}</h4>
         <!-- Do we want this h4 to be a router-link instead? So that when someone clicks on the postData.authorImage, they are brought to the UserProfile vue? -->
       </div>
       <img class="card-img-top" :src="postData.image || postData.video" height="250rem" width="100rem">
