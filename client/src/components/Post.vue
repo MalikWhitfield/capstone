@@ -31,7 +31,7 @@
       <!-- ADD COMMENTS ON POSTS -->
       <form v-if="showCommentForm" @submit.prevent="addComment(postData._id)">
         <input type="text" placeholder="Add Comment" v-model="newComment.content">
-        <button type="submit"><i class="fa fa-plus" aria-hidden="true"></i></button>
+        <button type="submit" class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i></button>
       </form>
     </div>
   </div>
@@ -104,6 +104,7 @@
 </script>
 
 <style>
-
-
+  .card {
+    color: whitesmoke;
+  }
 </style>

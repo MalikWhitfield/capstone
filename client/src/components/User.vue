@@ -20,12 +20,12 @@
       <div>
         <!-- See Following -->
         <div v-if="userId == user._id || !userId">
-          <button>View Following</button>
+          <button class="btn-success btn">View Following</button>
         </div>
         <!-- Follow -->
         <div v-else>
           <button v-if="following">Un-Follow</button>
-          <button v-else class="btn btn-primary" @click="follow(viewedUser._id)">Follow
+          <button v-else class="btn btn-success" @click="follow(viewedUser._id)">Follow
           </button>
         </div>
 
@@ -37,7 +37,7 @@
         <input type="text" v-model="user.name" placeholder="Name">
         <input type="text" v-model="user.bio" placeholder="Bio">
         <input type="text" v-model="user.image" placeholder="Image Url">
-        <button type="submit">Save</button>
+        <button type="submit" class="btn btn-success">Save</button>
       </form>
     </div>
 

@@ -9,7 +9,7 @@
             <input type="text" placeholder="Image Link Here" v-model="newPost.image">
             <input type="text" placeholder="Video Link Here" v-model="newPost.video">
             <input type="text" placeholder="Caption/Content Here" v-model="newPost.content" required: true>
-            <button type="submit">Add Post</button>
+            <button type="submit" class="btn btn-success">Add Post</button>
           </form>
           <div>
             <i class="fas fa-sync icon1 hover" @click="getPosts"></i>
@@ -102,7 +102,7 @@
 </script>
 <style scoped>
   .icon1 {
-    color: black;
+    color: whitesmoke;
     font-size: 20px;
   }
 </style>

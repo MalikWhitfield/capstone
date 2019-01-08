@@ -85,8 +85,6 @@
     font-size: 20px;
   }
 
-
-
   .hover {
     cursor: pointer;
   }
