@@ -56,6 +56,12 @@ export default new Vuex.Store({
     },
     setFollowers(state, payload) {
       state.following = payload
+    },
+    addHobbi(state, newHobbi) {
+      state.hobbies.push(newHobbi)
+    },
+    setHobbi(state, hobbies) {
+      state.hobbies = hobbies
     }
   },
   actions: {
@@ -172,12 +178,24 @@ export default new Vuex.Store({
           commit('setFollowers', res.data)
         })
     },
+    unFollow({ commit, dispatch }, payload) {
+      api.put('users/' + payload.userId + '/unfollow/' + payload.followingId)
+        .then(res => {
+          dispatch('getFollowing', payload.userId)
+        })
+    },
 
     //HOBBIES
-    addHobby({ commit, dispatch }, payload) {
-      api.post('hobbies', payload)
+    getHobbies({ commit, dispatch }, postId) {
+      api.get('hobbies', postId)
         .then(res => {
-
+          commit('setHobbi', res.data)
+        })
+    },
+    addHobbi({ commit, dispatch }, newHobbi) {
+      api.post('hobbies', newHobbi)
+        .then(res => {
+          commit('addHobbi', res.data)
         })
     }
   }

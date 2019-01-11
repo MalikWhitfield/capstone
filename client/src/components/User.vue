@@ -15,7 +15,8 @@
         <!-- need to write a v-for Hobbies here -->
         <li class="list-group-item">Cras justo odio</li>
         <li class="list-group-item">Dapibus ac facilisis in</li>
-        <li class="list-group-item">Vestibulum at eros</li>
+        <li class="list-group-item">Following: {{viewedUser.following ? viewedUser.following.length :
+          user.following.length}}</li>
       </ul>
       <div>
         <!-- See Following -->
@@ -24,7 +25,7 @@
         </div>
         <!-- Follow -->
         <div v-else>
-          <button v-if="following">Un-Follow</button>
+          <button v-if="following" class="btn btn-primary" @click="unFollow(viewedUser._id)">Un-Follow</button>
           <button v-else class="btn btn-success" @click="follow(viewedUser._id)">Follow
           </button>
         </div>
@@ -80,6 +81,13 @@
           followingId: this.viewedUser._id
         }
         this.$store.dispatch('follow', payload)
+      },
+      unFollow() {
+        let payload = {
+          userId: this.user._id,
+          followingId: this.viewedUser._id
+        }
+        this.$store.dispatch('unFollow', payload)
       }
     }
   }

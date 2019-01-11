@@ -12,12 +12,12 @@
       <img class="card-img-top" :src="postData.image || postData.video" height="250rem" width="100rem">
       <div class="card-body">
         <div class="card-subtitle">
-          <h6><strong>This will be Hobby Tags</strong></h6>
+          <h6 v-for="hobby in postData.hobbiTags"><strong>#{{hobby}}</strong></h6>
           <i class="fas fa-award mr-3 hover" @click="likePost(postData._id)"></i>
-          <p> <strong>Likes: {{postData.totalLikes}}</strong> </p>
+          <p> <strong>Likes: {{postData.totalLikes}}</strong></p>
         </div>
         <blockquote class="blockquote mb-0">
-          <p>{{postData.content}} </p>
+          <p>{{postData.content}}</p>
           <p>{{postData.createdAt}}</p>
           </footer>
         </blockquote>

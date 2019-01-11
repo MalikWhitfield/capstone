@@ -46,6 +46,7 @@ router.put('/:userId', (req, res, next) => {
     })
 })
 
+//Follow/Following
 router.put('/:userId/follow/:userIdToFollow', (req, res, next) => {
     Users.findById(req.session.uid)
         .then(user => {
@@ -58,6 +59,20 @@ router.put('/:userId/follow/:userIdToFollow', (req, res, next) => {
         .catch(err => next(err))
 })
 
+//Unfollow
+router.put('/:userId/unfollow/:userIdToUnFollow', (req, res, next) => {
+    Users.findById(req.session.uid)
+        .then(user => {
+            user.following.pull(req.params.userIdToUnFollow)
+            return user.save()
+        })
+        .then(() => {
+            res.send({ message: "User Unfollowed" })
+        })
+        .catch(err => next(err))
+})
+
+//Get Following
 router.get('/:userId/following', (req, res, next) => {
     Users.findById(req.params.userId).populate('following', 'name image _id')
         .exec((err, user) => {
