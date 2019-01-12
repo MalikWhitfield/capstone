@@ -2,9 +2,10 @@
   <div class="container-fluid">
     <div class="row justify-content-center">
       <!-- ADD POST BUTTON AND FORM -->
-      <div class="col-12">
+      <div class="col-1-sm col-4-lg offset-2 justify-content-center d-flex">
         <div v-if="user._id">
-          <i class="fa fa-plus icon1 hover" aria-hidden="true" @click="showAddPost= !showAddPost"></i>
+          <h4 class="hover icon1" aria-hidden="true" @click="showAddPost= !showAddPost">Create
+            Post</h4>
           <form v-if="showAddPost" @submit.prevent="addPost">
             <input type="text" placeholder="Hobbi Name Here" v-model="newPost.hobbiTags" required: true>
             <input type="text" placeholder="Image Link Here" v-model="newPost.image">
@@ -21,12 +22,12 @@
     <div class="row">
 
       <!-- USER SIDEBAR COMPONENT -->
-      <div class="col-4">
+      <div class="col-12-md col-lg-4">
         <User v-if="user._id" />
       </div>
 
       <!-- PUBLIC FEED -->
-      <div class="col-6">
+      <div class="col-1-md col-lg-6">
         <post v-for="post in posts" :key="post._id" :postData="post"></post>
       </div>
     </div>
