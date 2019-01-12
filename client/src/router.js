@@ -36,15 +36,15 @@ export default new Router({
       component: Login
     },
     {
+      path: '/allhobbies',
+      name: 'hobbiPage',
+      component: HobbiesPage,
+    },
+    {
       path: '/:userId',
       name: 'userprofile',
       props: true,
       component: UserProfile
-    },
-    {
-      path: '/allhobbies',
-      name: 'hobbiPage',
-      component: HobbiesPage,
     }
   ]
 })

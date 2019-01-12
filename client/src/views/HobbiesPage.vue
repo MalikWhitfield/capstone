@@ -1,12 +1,18 @@
 <template>
   <div class="container-fluid">
-    <div class="col-4">
-      <User v-if="user._id" />
+    <div class="row">
+      <div class="col-4">
+        <User v-if="user._id" />
+      </div>
+      <div class="col-6">
+        <hobbies></hobbies>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+  import Hobbies from "@/components/Hobbies.vue"
   import User from '@/components/User.vue'
   export default {
     name: 'hobbiesPage',
@@ -22,7 +28,8 @@
     },
     methods: {},
     components: {
-      User
+      User,
+      Hobbies
     }
   }
 

@@ -83,13 +83,19 @@ router.delete('/:postId', (req, res, next) => {
 
 //Likes ROUTE
 router.put('/likes/:postId', (req, res, next) => {
+    if (!req.session.uid) {
+        res.status(401).send('Login To Like')
+    }
     Posts.findById(req.params.postId)
         .then(post => {
-            if (post.likes[req.session.uid] || !req.session.uid) {
-                res.status(401).send('Sorry, cannot like post again')
-                return
+            if (post.likes[req.session.uid]) {
+                {
+                    delete post.likes[req.session.uid]
+                }
             }
-            post.likes[req.session.uid] = 1
+            else {
+                post.likes[req.session.uid] = 1
+            }
             post.markModified('likes')
             post.save((err) => {
                 if (err) {
@@ -104,6 +110,9 @@ router.put('/likes/:postId', (req, res, next) => {
             next()
         })
 })
+
+// res.status(401).send('Sorry, cannot like post again')
+// return
 
 
 
