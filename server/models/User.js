@@ -20,7 +20,7 @@ let schema = new Schema({
     password: { type: String, required: true },
     bio: { type: String },
     image: { type: String }, //DEFAULT ON THE FRONT END,
-    hobbies: [{ type: String }],
+    hobbies: [hobby],
     following: [{ type: ObjectId, ref: 'User' }]
 },
     { timestamps: true },

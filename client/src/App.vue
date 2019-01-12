@@ -14,6 +14,9 @@
           <li class="nav-item">
             <a class="nav-link" href="/">Home</a>
           </li>
+          <li class="nav-item">
+            <router-link class="nav-link hover" :to="{name: 'hobbiPage'}">Hobbies</router-link>
+          </li>
           <li v-if="!user._id" class="nav-item action">
             <router-link class="nav-link" :to="{name: 'login'}">Login/Register</router-link>
           </li>

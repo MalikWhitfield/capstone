@@ -78,6 +78,7 @@
         this.$store.dispatch('getPosts')
       },
       addPost() {
+        this.newPost.hobbiTags = this.newPost.hobbiTags.toLowerCase()
         this.$store.dispatch('addPost', this.newPost)
         this.showAddPost = false
       },

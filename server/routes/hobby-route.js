@@ -1,5 +1,6 @@
 let router = require('express').Router()
 let Hobbies = require('../models/Hobby')
+let Users = require('../models/User')
 
 //GET HOBBIES BY USER
 router.get('/:userId', (req, res, next) => {
@@ -25,12 +26,17 @@ router.get('/', (req, res, next) => {
         })
 })
 
-//POST HOBBIES
+//USER HOBBIES
 router.post('/', (req, res, next) => {
-    req.body.authorId = req.session.uid
-    Hobbies.create(req.body)
-        .then(newHobby => {
-            res.send(newHobby)
+    Users.findById(req.body.userId)
+        .then(user => {
+            user.hobbies.addToSet(req.body)
+            user.save(err => {
+                if (err) {
+                    next(err)
+                }
+                res.send(user)
+            })
         })
         .catch(err => {
             console.log(err)

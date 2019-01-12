@@ -34,7 +34,7 @@ export default new Vuex.Store({
       state.posts = posts
     },
     addPost(state, newPost) {
-      state.posts.push(newPost)
+      state.posts.unshift(newPost)
     },
     setUser(state, user) {
       state.user = user
@@ -195,7 +195,7 @@ export default new Vuex.Store({
     addHobbi({ commit, dispatch }, newHobbi) {
       api.post('hobbies', newHobbi)
         .then(res => {
-          commit('addHobbi', res.data)
+          commit('setUser', res.data)
         })
     }
   }

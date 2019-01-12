@@ -7,7 +7,8 @@ import Login from './views/Login.vue'
 
 // @ts-ignore
 import UserProfile from './views/UserProfile.vue'
-
+// @ts-ignore
+import HobbiesPage from './views/HobbiesPage.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -39,6 +40,11 @@ export default new Router({
       name: 'userprofile',
       props: true,
       component: UserProfile
+    },
+    {
+      path: '/allhobbies',
+      name: 'hobbiPage',
+      component: HobbiesPage,
     }
   ]
 })
