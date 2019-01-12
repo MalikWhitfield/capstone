@@ -17,7 +17,7 @@ router.get('/:userId', (req, res, next) => {
 
 //GET ALL POSTS FOR TIMELINE
 router.get('/', (req, res, next) => {
-    Posts.find({})
+    Posts.find({}).sort({ createdAt: "desc" })
         .populate('authorId', 'name image _id')
         //AFTER WE GET ALL POSTS, WE WANT TO GET THE POSTS OF THE PEOPLE WE FOLLOW
         .exec((err, data) => {
@@ -32,10 +32,10 @@ router.post('/', (req, res, next) => {
     req.body.authorId = req.session.uid
     Posts.create(req.body)
         .then(newPost => {
-            newPost.authorId = {
-                name: req.session.user.name,
-                image: req.session.user.image,
-                _id: req.session.user._id
+            newPost._doc.authorId = { //THIS DATA IS ONLY FOR FRONT END VISUALIZATION AND RESPONSE
+                name: req.session.userName,
+                image: req.session.userImage,
+                _id: req.session.uid
             }
             res.send(newPost)
         })

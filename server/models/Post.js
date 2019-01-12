@@ -9,7 +9,7 @@ let schema = new Schema({
   content: { type: String, required: true },
   video: { type: String },
   image: { type: String },
-  hobbyId: { type: ObjectId, ref: 'Hobby' },
+  hobbiTags: [{ type: String }],
   authorId: { type: ObjectId, ref: 'User', required: true },
   likes: { type: Object, default: {} }
 },

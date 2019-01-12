@@ -1,13 +1,6 @@
 <template>
     <div class="user-profile">
         <div class="row">
-            <!-- <div class="col-12">
-                <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-                    <a class="navbar-brand" href="#">
-                        {{user.name}}
-                    </a>
-                </nav>
-            </div> -->
         </div>
         <div class="row">
             <div class="col-4">

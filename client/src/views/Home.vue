@@ -6,6 +6,7 @@
         <div v-if="user._id">
           <i class="fa fa-plus icon1 hover" aria-hidden="true" @click="showAddPost= !showAddPost"></i>
           <form v-if="showAddPost" @submit.prevent="addPost">
+            <input type="text" placeholder="Hobbi Name Here" v-model="newPost.hobbiTags" required: true>
             <input type="text" placeholder="Image Link Here" v-model="newPost.image">
             <input type="text" placeholder="Video Link Here" v-model="newPost.video">
             <input type="text" placeholder="Caption/Content Here" v-model="newPost.content" required: true>
@@ -43,7 +44,8 @@
         newPost: {
           content: "",
           video: "",
-          image: ""
+          image: "",
+          hobbiTags: ""
         },
         newComment: {
           content: '',
@@ -76,6 +78,7 @@
         this.$store.dispatch('getPosts')
       },
       addPost() {
+        this.newPost.hobbiTags = this.newPost.hobbiTags.toLowerCase()
         this.$store.dispatch('addPost', this.newPost)
         this.showAddPost = false
       },
