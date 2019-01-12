@@ -22,11 +22,11 @@ let api = Axios.create({
 
 export default new Vuex.Store({
   state: {
-    user: {},
+    user: { following: [] },
     viewedUser: {},
     posts: [],
     comments: {},
-    hobbies: [],
+    hobbies: {},
     following: []
   },
   mutations: {
@@ -39,12 +39,12 @@ export default new Vuex.Store({
     setUser(state, user) {
       state.user = user
     },
-    setLikes(state, updatedPost) {
-      let index = state.posts.findIndex(post => {
-        return post._id == updatedPost._id
-      })
-      state.posts.splice(index, 1, updatedPost)
-    },
+    // setLikes(state, updatedPost) {
+    //   let index = state.posts.findIndex(post => {
+    //     return post._id == updatedPost._id
+    //   })
+    //   state.posts.splice(index, 1, updatedPost)
+    // },
     setComments(state, payload) {
       Vue.set(state.comments, payload.postId, payload.comments)
     },
@@ -60,8 +60,17 @@ export default new Vuex.Store({
     addHobbi(state, newHobbi) {
       state.hobbies.push(newHobbi)
     },
-    setHobbi(state, hobbies) {
-      state.hobbies = hobbies
+    setHobbies(state, posts) {
+      let hobbiDict = {} //EMPTY OBJECT
+      posts.forEach(post => { //ITERATING OVER THE ARRAY OF POSTS
+        post.hobbiTags.forEach(hobbi => { //THIS IS ITERATING OVER EACH POST'S ARRAY OF HOBBITAGS
+          if (!hobbiDict[hobbi]) { //IF 
+            hobbiDict[hobbi] = []
+          }
+          hobbiDict[hobbi].push(post)
+        })
+      })
+      state.hobbies = hobbiDict
     }
   },
   actions: {
@@ -71,6 +80,7 @@ export default new Vuex.Store({
         .then(res => {
           commit('setUser', res.data)
           dispatch('getFollowing', res.data._id)
+          dispatch('getPosts')
         })
     },
     login({ commit, dispatch }, creds) {
@@ -116,6 +126,7 @@ export default new Vuex.Store({
       api.get('/posts')
         .then(res => {
           commit('setPosts', res.data)
+          commit('setHobbies', res.data)
         })
     },
 
@@ -123,6 +134,7 @@ export default new Vuex.Store({
       api.post('posts', newPost)
         .then(res => {
           commit('addPost', res.data)
+          dispatch('getPosts')
         })
     },
     deletePost({ commit, dispatch }, postId) {
@@ -134,14 +146,19 @@ export default new Vuex.Store({
     likePost({ commit, dispatch }, postId) {
       api.put('posts/likes/' + postId)
         .then(res => {
-          let payload = {
-            postId: postId,
-            likes: res.data,
-          }
-          commit('setLikes', payload)
+          dispatch('getPosts')
         })
         .catch(err => {
           console.log('Sorry, cannot like post again')
+        })
+    },
+    unLikePost({ commit, dispatch }, postId) {
+      api.put('posts/likes/' + postId)
+        .then(res => {
+          dispatch('getPosts')
+        })
+        .catch(err => {
+          console.log(err)
         })
     },
 
@@ -186,12 +203,12 @@ export default new Vuex.Store({
     },
 
     //HOBBIES
-    getHobbies({ commit, dispatch }, postId) {
-      api.get('hobbies', postId)
-        .then(res => {
-          commit('setHobbi', res.data)
-        })
-    },
+    // getHobbies({ commit, dispatch }, postId) {
+    //   api.get('hobbies', postId)
+    //     .then(res => {
+    //       commit('setHobbies', res.data)
+    //     })
+    // },
     addHobbi({ commit, dispatch }, newHobbi) {
       api.post('hobbies', newHobbi)
         .then(res => {

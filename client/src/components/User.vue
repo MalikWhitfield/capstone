@@ -1,6 +1,6 @@
 <template>
   <div class="User">
-    <div class="card" style="width: 12rem;">
+    <div class="card" style="width: 16rem;">
       <img class="card-img-top" :src="viewedUser.image || user.image" height="auto" max-height="400px" alt="User Image">
       <!-- need to allow users to set a profile image -->
       <div class="card-body">

@@ -9,7 +9,9 @@
         <h4>{{postData.authorId.name}}</h4>
         <!-- Do we want this h4 to be a router-link instead? So that when someone clicks on the postData.authorImage, they are brought to the UserProfile vue? -->
       </div>
-      <img class="card-img-top" :src="postData.image || postData.video" height="250rem" width="100rem">
+      <div class="card-img-top">
+        <img :src="postData.image || postData.video" height="250rem" max-width="30rem;">
+      </div>
       <div class="card-body">
         <div class="card-subtitle">
           <h6 v-for="hobby in postData.hobbiTags"><strong>#{{hobby}}</strong></h6>
@@ -26,8 +28,6 @@
       <p class="hover" @click="showComments = !showComments">Show Comments...</p>
       <comments v-if="showComments" v-for="comment in comments" :commentData="comment"></comments>
       <i class="fas fa-comment mb-2 hover" @click="showCommentForm = !showCommentForm"></i>
-
-
       <!-- ADD COMMENTS ON POSTS -->
       <form v-if="showCommentForm" @submit.prevent="addComment(postData._id)">
         <input type="text" placeholder="Add Comment" v-model="newComment.content">
