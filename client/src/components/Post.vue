@@ -6,7 +6,7 @@
         <router-link :to="{name: 'userprofile', params: { userId: postData.authorId._id}}">
           <img :src="postData.authorId.image" height="30rem" width="30rem" @click="getUser(postData.authorId._id)">
         </router-link>
-        <h4>{{postData.authorId.name}}</h4>
+        <h4 class="ml-1">{{postData.authorId.name}}</h4>
         <!-- Do we want this h4 to be a router-link instead? So that when someone clicks on the postData.authorImage, they are brought to the UserProfile vue? -->
       </div>
       <div class="card-img-top">
