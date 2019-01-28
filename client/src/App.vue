@@ -1,9 +1,8 @@
 <template>
   <div id="app" class="container-fluid">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <a class="navbar-brand" href="#">
-        myHobb
-        <i class="fas fa-info-circle icon"></i>
+      <a class="navbar-brand" href="#">myHobbi
+        <!-- <i class="fas fa-info-circle icon"></i> -->
       </a>
       <button
         class="navbar-toggler"

@@ -25,14 +25,14 @@
         </div>
       </div>
     </div>
-    <div class="row d-flex">
+    <div class="row d-flex flex-row">
       <!-- USER SIDEBAR COMPONENT -->
-      <div class="col-4-lg col-12-sm">
+      <div class="col-4 col-12-sm">
         <User v-if="user._id"/>
       </div>
 
       <!-- PUBLIC FEED -->
-      <div class="col-6-lg col-12-sm">
+      <div class="col-8 col-12-sm">
         <post v-for="post in posts" :key="post._id" :postData="post"></post>
       </div>
     </div>

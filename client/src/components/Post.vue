@@ -1,29 +1,42 @@
 <template>
   <div class="container-fluid">
     <!-- CARD FOR EACH POST -->
-    <div class="card">
+    <div class="card" width="16rem">
       <div class="card-header d-flex justify-content-start">
         <router-link :to="{name: 'userprofile', params: { userId: postData.authorId._id}}">
-          <img :src="postData.authorId.image" height="30rem" width="30rem" @click="getUser(postData.authorId._id)">
+          <img
+            :src="postData.authorId.image"
+            height="30rem"
+            width="30rem"
+            @click="getUser(postData.authorId._id)"
+          >
         </router-link>
         <h4 class="ml-1">{{postData.authorId.name}}</h4>
         <!-- Do we want this h4 to be a router-link instead? So that when someone clicks on the postData.authorImage, they are brought to the UserProfile vue? -->
       </div>
       <div class="card-img-top">
-        <img :src="postData.image || postData.video" height="250rem" max-width="30rem;">
+        <img :src="postData.image || postData.video" height="250rem" max-width="16rem;">
       </div>
       <div class="card-body">
         <div class="card-subtitle">
-          <h6 v-for="hobby in postData.hobbiTags"><strong>#{{hobby}}</strong></h6>
+          <h6 v-for="hobby in postData.hobbiTags">
+            <strong>#{{hobby}}</strong>
+          </h6>
           <i class="fas fa-award mr-3 hover" @click="likePost(postData._id)"></i>
-          <p> <strong>Likes: {{postData.totalLikes}}</strong></p>
+          <p>
+            <strong>Likes: {{postData.totalLikes}}</strong>
+          </p>
         </div>
         <blockquote class="blockquote mb-0">
           <p>{{postData.content}}</p>
           <p>{{postData.createdAt}}</p>
-          </footer>
         </blockquote>
-        <i v-if="!user.id" class="fa fa-trash mb-2 hover" aria-hidden="true" @click="deletePost(postData._id)"></i>
+        <i
+          v-if="!user.id"
+          class="fa fa-trash mb-2 hover"
+          aria-hidden="true"
+          @click="deletePost(postData._id)"
+        ></i>
       </div>
       <p class="hover" @click="showComments = !showComments">Show Comments...</p>
       <comments v-if="showComments" v-for="comment in comments" :commentData="comment"></comments>
@@ -31,80 +44,80 @@
       <!-- ADD COMMENTS ON POSTS -->
       <form v-if="showCommentForm" @submit.prevent="addComment(postData._id)">
         <input type="text" placeholder="Add Comment" v-model="newComment.content">
-        <button type="submit" class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i></button>
+        <button type="submit" class="btn btn-success">
+          <i class="fa fa-plus" aria-hidden="true"></i>
+        </button>
       </form>
     </div>
   </div>
 </template>
 
 <script>
-  import Comments from "@/components/Comments.vue"
-  export default {
-    name: 'post',
-    props: ['postData'],
-    data() {
-      return {
-        newPost: {
-          content: "",
-          video: "",
-          image: ""
-        },
-        newComment: {
-          content: '',
-          postId: ''
-        },
-        showAddPost: false,
-        showCommentForm: false,
-        showComments: false,
-
-      }
-    },
-    mounted() {
-      this.$store.dispatch('getComments', this.postData._id);
-    },
-    computed: {
-      // posts() {
-      //   let posts = this.$store.state.posts || [];
-      //   posts.forEach(p => {
-      //     p.totalLikes = Object.keys(this.postData.likes).length
-      //   })
-      //   return posts
-      // },
-      user() {
-        return this.$store.state.user
+import Comments from "@/components/Comments.vue";
+export default {
+  name: "post",
+  props: ["postData"],
+  data() {
+    return {
+      newPost: {
+        content: "",
+        video: "",
+        image: ""
       },
-      comments() {
-        return this.$store.state.comments[this.postData._id] || {}
-      }
+      newComment: {
+        content: "",
+        postId: ""
+      },
+      showAddPost: false,
+      showCommentForm: false,
+      showComments: false
+    };
+  },
+  mounted() {
+    this.$store.dispatch("getComments", this.postData._id);
+  },
+  computed: {
+    // posts() {
+    //   let posts = this.$store.state.posts || [];
+    //   posts.forEach(p => {
+    //     p.totalLikes = Object.keys(this.postData.likes).length
+    //   })
+    //   return posts
+    // },
+    user() {
+      return this.$store.state.user;
     },
-    methods: {
-      addComment(postId) {
-        let payload = {
-          postId: postId,
-          content: this.newComment.content
-        }
-        this.$store.dispatch('addComment', payload)
-        this.showCommentForm = false
-      },
-      likePost(postId) {
-        this.$store.dispatch('likePost', postId)
-      },
-      deletePost(postId) {
-        this.$store.dispatch('deletePost', postId)
-      },
-      getUser(id) {
-        this.$store.dispatch('getUser', id)
-      }
-    },
-    components: {
-      Comments
+    comments() {
+      return this.$store.state.comments[this.postData._id] || {};
     }
+  },
+  methods: {
+    addComment(postId) {
+      let payload = {
+        postId: postId,
+        content: this.newComment.content
+      };
+      this.$store.dispatch("addComment", payload);
+      this.showCommentForm = false;
+    },
+    likePost(postId) {
+      this.$store.dispatch("likePost", postId);
+    },
+    deletePost(postId) {
+      this.$store.dispatch("deletePost", postId);
+    },
+    getUser(id) {
+      this.$store.dispatch("getUser", id);
+    }
+  },
+  components: {
+    Comments
   }
-
+};
 </script>
 
 <style>
-  .card {
-    color: whitesmoke;
-  }
+.card {
+  color: whitesmoke;
+}
 </style>
