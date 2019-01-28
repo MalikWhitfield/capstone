@@ -2,9 +2,12 @@
   <div class="container-fluid">
     <div class="row d-flex justify-content-center">
       <!-- ADD POST BUTTON AND FORM -->
-      <div class="col-12">
+      <div class="col-1-sm col-4-lg offset-2 justify-content-center d-flex">
         <div v-if="user._id">
-          <i class="fa fa-plus icon1 hover" aria-hidden="true" @click="showAddPost= !showAddPost"></i>
+          <h4 class="hover icon1" aria-hidden="true" @click="showAddPost= !showAddPost">
+            Create
+            Post
+          </h4>
           <form v-if="showAddPost" @submit.prevent="addPost">
             <input type="text" placeholder="Hobbi Name Here" v-model="newPost.hobbiTags" required: true>
             <input
