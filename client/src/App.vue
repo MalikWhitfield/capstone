@@ -68,14 +68,18 @@ export default {
 </script>
 
 <style scoped>
-  #app {
-    font-family: "Avenir", Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-    min-width: 100vw;
-  }
+.container-fluid {
+  /* best practice to not use important tags unless need to combant bootstrap styling */
+  padding: 0 !important;
+}
+#app {
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  min-width: 100vw;
+}
 
 #nav {
   padding: 30px;

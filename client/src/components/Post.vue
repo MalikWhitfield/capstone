@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <!-- CARD FOR EACH POST -->
     <div class="card">
-      <div class="card-header d-flex justify-content-between align-items-center pt-1 pb-1">
+      <div class="card-header d-flex justify-content-start align-items-center pt-1 pb-1">
         <router-link :to="{name: 'userprofile', params: { userId: postData.authorId._id}}">
           <img
             :src="postData.authorId.image"
@@ -11,25 +11,30 @@
             @click="getUser(postData.authorId._id)"
           >
         </router-link>
-        <h5 class="post-author">{{postData.authorId.name}}</h5>
-        <p>{{postData.createdAt}}</p>
+        <h5 class="ml-1">{{postData.authorId.name}}</h5>
+        <p>{{formatDate(postData.createdAt)}}</p>
         <!-- Do we want this h4 to be a router-link instead? So that when someone clicks on the postData.authorImage, they are brought to the UserProfile vue? -->
       </div>
       <div class="card-img-top">
         <img :src="postData.image || postData.video" height="250rem" max-width="30rem;">
         <p>{{postData.content}}</p>
-        <p v-for="hobby in postData.hobbiTags"><strong>#{{hobby}}</strong></p>
-
+        <p v-for="hobby in postData.hobbiTags">
+          <strong>#{{hobby}}</strong>
+        </p>
       </div>
       <div class="card-body">
-        <i class="fas fa-award mr-3 hover icon-size" @click="likePost(postData._id)"> <strong>
-            {{postData.totalLikes}}</strong></i>
+        <i class="fas fa-award mr-3 hover icon-size" @click="likePost(postData._id)">
+          <strong>{{postData.totalLikes}}</strong>
+        </i>
       </div>
       <div class="card-subtitle">
-        <blockquote class="blockquote mb-0">
-          </footer>
-        </blockquote>
-        <i v-if="postData.authorId._id == user._id" class="fa fa-trash mb-2 hover" aria-hidden="true" @click="deletePost(postData._id)"></i>
+        <blockquote class="blockquote mb-0"></blockquote>
+        <i
+          v-if="postData.authorId._id == user._id"
+          class="fa fa-trash mb-2 hover"
+          aria-hidden="true"
+          @click="deletePost(postData._id)"
+        ></i>
       </div>
       <p class="hover" @click="showComments = !showComments">Show Comments...</p>
       <comments v-if="showComments" v-for="comment in comments" :commentData="comment"></comments>
@@ -101,6 +106,10 @@ export default {
     },
     getUser(id) {
       this.$store.dispatch("getUser", id);
+    },
+    formatDate(d) {
+      let postDate = new Date(d);
+      console.log(typeof postDate);
     }
   },
   components: {
@@ -110,16 +119,16 @@ export default {
 </script>
 
 <style>
-  .card {
-    color: whitesmoke;
-    border-color: #42b983
-  }
+.card {
+  color: whitesmoke;
+  /* border-color: #42b983; */
+}
 
-  .icon-size {
-    font-size: 25px
-  }
+.icon-size {
+  font-size: 25px;
+}
 
-  .post-author {
-    margin-right: 90px
-  }
+/* .post-author {
+  margin-right: 90px;
+} */
 </style>
