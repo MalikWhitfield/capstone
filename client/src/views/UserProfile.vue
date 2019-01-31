@@ -6,7 +6,12 @@
         <user/>
       </div>
       <div class="col-6">
+        <div v-if="!activeHobbi">
         <post v-for="post in posts" :key="post._id" :postData="post"/>
+        </div>
+        <div v-else>
+        <post v-for="hobbiPost in hobbiPosts" :key="hobbiPost._id" :postData="post"/>
+        </div>
       </div>
     </div>
   </div>
@@ -37,14 +42,16 @@ export default {
       );
     },
     activeHobbi() {
-      this.$store.activeHobbi;
+      this.$store.state.activeHobbi;
     },
     user() {
       return this.$store.state.viewedUser;
     },
     hobbiPosts() {
       return this.$store.state.posts.filter(
-        post => post.authorId._id == this.userId && activeHobbi
+        post =>
+          post.authorId._id == this.userId &&
+          post.hobbiTags.includes(activeHobbi.name)
       );
     }
   },
