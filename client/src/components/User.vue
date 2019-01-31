@@ -13,7 +13,7 @@
       </div>
       <ul class="list-group list-group-flush">
         <!-- need to write a v-for Hobbies here -->
-        <li class="list-group-item hover" v-for="hobbi in user.hobbies"> {{hobbi.name}} - {{hobbi.level}} </li>
+        <li class="list-group-item hover" v-for="hobbi in user.hobbies" @click="changeActiveHobbi(hobbi)" :key="hobbi.id"> {{hobbi.name}} - {{hobbi.level}} </li>
         <li class="list-group-item">Following: {{viewedUser.following ? viewedUser.following.length :
           user.following.length}}</li>
       </ul>
@@ -82,7 +82,7 @@
       },
       userId() {
         return this.$route.params.userId
-      }
+      },
     },
     methods: {
       setUser() {
@@ -110,6 +110,9 @@
         this.newHobbi.userId = this.user._id
         this.$store.dispatch('addHobbi', this.newHobbi)
         this.showAddHobbi = false
+      },
+      changeActiveHobbi(hobbi){
+        this.$store.dispatch('changeActiveHobbi', hobbi)
       }
     }
   }

@@ -27,7 +27,8 @@ export default new Vuex.Store({
     posts: [],
     comments: {},
     hobbies: {},
-    following: []
+    following: [],
+    activeHobbi: {}
   },
   mutations: {
     setPosts(state, posts) {
@@ -71,6 +72,9 @@ export default new Vuex.Store({
         })
       })
       state.hobbies = hobbiDict
+    },
+    setActiveHobbi(state, hobbi) {
+      state.activeHobbi = hobbi
     }
   },
   actions: {
@@ -214,6 +218,9 @@ export default new Vuex.Store({
         .then(res => {
           commit('setUser', res.data)
         })
+    },
+    changeActiveHobbi({ commit, dispatch }, hobbi) {
+      commit('setActiveHobbi', hobbi)
     }
   }
 })

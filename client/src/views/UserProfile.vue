@@ -36,8 +36,16 @@ export default {
         ) || []
       );
     },
+    activeHobbi() {
+      this.$store.activeHobbi;
+    },
     user() {
       return this.$store.state.viewedUser;
+    },
+    hobbiPosts() {
+      return this.$store.state.posts.filter(
+        post => post.authorId._id == this.userId && activeHobbi
+      );
     }
   },
   methods: {}
