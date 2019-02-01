@@ -1,13 +1,7 @@
 <template>
   <div class="User">
     <div class="card" style="width: 16rem;">
-      <img
-        class="card-img-top"
-        :src="viewedUser.image || user.image"
-        height="auto"
-        max-height="400px"
-        alt="User Image"
-      >
+      <img class="card-img-top" :src="viewedUser.image || user.image" height="auto" max-height="400px" alt="User Image">
       <!-- need to allow users to set a profile image -->
       <div class="card-body">
         <div class="d-flex justify-content-end" v-if="user._id && viewedUser._id == user._id">
@@ -22,12 +16,8 @@
       </div>
       <ul class="list-group list-group-flush">
         <!-- need to write a v-for Hobbies here -->
-        <li
-          class="list-group-item hover"
-          v-for="hobbi in viewedUser.hobbies || user.hobbies"
-          @click="changeActiveHobbi(hobbi)"
-          :key="hobbi.id"
-        >{{hobbi.name}} - {{hobbi.level}}</li>
+        <li class="list-group-item hover" v-for="hobbi in viewedUser.hobbies || user.hobbies" @click="changeActiveHobbi(hobbi)"
+          :key="hobbi.id">{{hobbi.name}} - {{hobbi.level}}</li>
         <li class="list-group-item">
           Following: {{viewedUser.following ? viewedUser.following.length :
           user.following.length}}
@@ -40,11 +30,7 @@
         </div>
         <!-- Follow -->
         <div v-else>
-          <button
-            v-if="following"
-            class="btn btn-primary"
-            @click="unFollow(viewedUser._id)"
-          >Un-Follow</button>
+          <button v-if="following" class="btn btn-primary" @click="unFollow(viewedUser._id)">Un-Follow</button>
           <button v-else class="btn btn-success" @click="follow(viewedUser._id)">Follow</button>
         </div>
       </div>
@@ -73,70 +59,69 @@
 </template>
 
 <script>
-export default {
-  name: "",
-  data() {
-    return {
-      showEditUser: false,
-      showAddHobbi: false,
-      newHobbi: {
-        name: "",
-        level: "Just For Fun"
+  export default {
+    name: "",
+    data() {
+      return {
+        showEditUser: false,
+        showAddHobbi: false,
+        newHobbi: {
+          name: "",
+          level: "Just For Fun"
+        }
+      };
+    },
+    computed: {
+      user() {
+        return this.$store.state.user;
+      },
+      viewedUser() {
+        return this.$store.state.viewedUser;
+      },
+      following() {
+        return this.$store.state.following.find(
+          u => u._id == this.viewedUser._id
+        );
+      },
+      userId() {
+        return this.$route.params.userId;
+      },
+      activeHobbi() {
+        return this.$store.state.activeHobbi;
       }
-    };
-  },
-  computed: {
-    user() {
-      return this.$store.state.user;
     },
-    viewedUser() {
-      return this.$store.state.viewedUser;
-    },
-    following() {
-      return this.$store.state.following.find(
-        u => u._id == this.viewedUser._id
-      );
-    },
-    userId() {
-      return this.$route.params.userId;
-    },
-    activeHobbi() {
-      this.$store.state.activeHobbi;
+    methods: {
+      setUser() {
+        this.$store.commit("setDefaultUser");
+      },
+      editUser() {
+        this.$store.dispatch("editUser", this.user);
+        this.showEditUser = false;
+      },
+      follow() {
+        let payload = {
+          userId: this.user._id,
+          followingId: this.viewedUser._id
+        };
+        this.$store.dispatch("follow", payload);
+      },
+      unFollow() {
+        let payload = {
+          userId: this.user._id,
+          followingId: this.viewedUser._id
+        };
+        this.$store.dispatch("unFollow", payload);
+      },
+      addHobbi() {
+        this.newHobbi.userId = this.user._id;
+        this.$store.dispatch("addHobbi", this.newHobbi);
+        this.showAddHobbi = false;
+      },
+      changeActiveHobbi(hobbi) {
+        this.$store.dispatch("changeActiveHobbi", hobbi);
+      }
     }
-  },
-  methods: {
-    setUser() {
-      this.$store.commit("setDefaultUser");
-    },
-    editUser() {
-      this.$store.dispatch("editUser", this.user);
-      this.showEditUser = false;
-    },
-    follow() {
-      let payload = {
-        userId: this.user._id,
-        followingId: this.viewedUser._id
-      };
-      this.$store.dispatch("follow", payload);
-    },
-    unFollow() {
-      let payload = {
-        userId: this.user._id,
-        followingId: this.viewedUser._id
-      };
-      this.$store.dispatch("unFollow", payload);
-    },
-    addHobbi() {
-      this.newHobbi.userId = this.user._id;
-      this.$store.dispatch("addHobbi", this.newHobbi);
-      this.showAddHobbi = false;
-    },
-    changeActiveHobbi(hobbi) {
-      debugger;
-      this.$store.dispatch("changeActiveHobbi", hobbi);
-    }
-  }
-};
+  };
 </script>
 
 <style>
