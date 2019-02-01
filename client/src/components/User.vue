@@ -36,7 +36,7 @@
       <div>
         <!-- See Following -->
         <div v-if="userId == user._id || !userId">
-          <button class="btn-success btn">View Following</button>
+          <button class="btn-success btn mb-2 mt-2">View Following</button>
         </div>
         <!-- Follow -->
         <div v-else>
@@ -54,7 +54,7 @@
         <input type="text" v-model="user.name" placeholder="Name">
         <input type="text" v-model="user.bio" placeholder="Bio">
         <input type="text" v-model="user.image" placeholder="Image Url">
-        <button type="submit" class="btn btn-success">Save</button>
+        <button type="submit" class="btn btn-success ml-2">Save</button>
       </form>
 
       <!-- ADD A HOBBI FORM -->
@@ -66,7 +66,7 @@
           <option value="Intermediate">Intermediate</option>
           <option value="Advanced">Advanced</option>
         </select>
-        <button type="submit" class="btn btn-success">Save</button>
+        <button type="submit" class="btn btn-success ml-2 mt-1 mb-1">Save</button>
       </form>
     </div>
   </div>

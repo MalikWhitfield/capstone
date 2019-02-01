@@ -24,7 +24,7 @@
       </div>
       <div class="card-body">
         <i class="fas fa-award mr-3 hover icon-size" @click="likePost(postData._id)">
-          <strong>{{postData.totalLikes}}</strong>
+          <strong> {{postData.totalLikes}}</strong>
         </i>
       </div>
       <div class="card-subtitle">
