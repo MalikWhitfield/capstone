@@ -35,11 +35,11 @@
       </ul>
       <div>
         <!-- See Following -->
-        <!-- <div v-if="userId == user._id || !userId">
+        <div v-if="userId == user._id || !userId">
           <button class="btn-success btn">View Following</button>
-        </div>-->
+        </div>
         <!-- Follow -->
-        <div>
+        <div v-else>
           <button
             v-if="following"
             class="btn btn-primary"
